@@ -6,7 +6,7 @@
 /*   By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 23:09:00 by jonadomi          #+#    #+#             */
-/*   Updated: 2026/02/02 21:43:34 by jonadomi         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:46:44 by jonadomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 char	**parse_args(t_ps *ps, int argc, char **argv)
 {
-	char	**args;
-
 	if (argc == 1 || (argc == 2 && !argv[1][0]))
 		return (NULL);
 	if (argc == 2)

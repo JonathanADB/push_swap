@@ -6,7 +6,7 @@
 /*   By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 16:04:17 by jonadomi          #+#    #+#             */
-/*   Updated: 2026/02/02 21:31:46 by jonadomi         ###   ########.fr       */
+/*   Updated: 2026/02/02 21:48:16 by jonadomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	main(int argc, char **argv)
 	args = parse_args(&ps, argc, argv);
 	if (!args)
 		return (0);
-	init_stack_a(&ps, ps.args);
+	init_stack_a(&ps, args);
 	sort_if_needed(&ps);
 	free_all(&ps);
 	return (0);
