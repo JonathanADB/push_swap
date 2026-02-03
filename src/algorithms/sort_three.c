@@ -6,7 +6,7 @@
 /*   By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:41:03 by jonadomi          #+#    #+#             */
-/*   Updated: 2026/02/02 16:28:57 by jonadomi         ###   ########.fr       */
+/*   Updated: 2026/02/03 21:48:34 by jonadomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	sort_three(t_ps *ps)
 		ra(ps);
 	else if (a < b && a > c)
 		rra(ps);
-	else if (a < b && b > c)
+	else if (a < b && b > c && a < c)
 	{
 		sa(ps);
 		ra(ps);

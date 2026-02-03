@@ -1,45 +1,115 @@
-// Si no hay argumentos suficientes, el programa termina sin imprimir nada
-if (argc < 2)
-    return (0);
+# 🧩 push_swap — Explicación de la lógica de mi implementación
 
-// Inicializar toda la estructura t_ps a cero para evitar valores basura
-ft_memset(&ps, 0, sizeof(t_ps));
+Este proyecto implementa un algoritmo eficiente para ordenar una pila de números utilizando únicamente un conjunto limitado de operaciones.
+Mi solución se basa en una versión optimizada del algoritmo Turk, combinada con una fase inicial de pre‑partición por mediana, lo que reduce drásticamente el número total de movimientos.
 
-// Parsear los argumentos:
-//  - Si hay un solo argumento, usar ft_split
-//  - Si hay varios, usar argv + 1
-//  - Si no hay argumentos válidos, terminar sin error
-//  - Si ocurre un error real, parse_args llama a error_exit(ps)
-args = parse_args(&ps, argc, argv);
-if (!args)
-    return (0);
-ps.args = args;
+El resultado es un push_swap capaz de:
 
-// Construir el stack A:
-//  - Validar sintaxis
-//  - Detectar overflow
-//  - Detectar duplicados
-//  - Crear nodos y añadirlos al stack
-//  - Actualizar ps.size_a
-//  - Si algo falla, init_stack_a llama a error_exit(ps)
-init_stack_a(&ps, ps.args);
+    - Ordenar 100 números en ~550–650 movimientos
 
-// Ejecutar el algoritmo adecuado:
-//  - Si ya está ordenado → no hacer nada
-//  - Si hay 2 elementos → sa
-//  - Si hay 3 elementos → sort_three
-//  - Si hay más → algoritmo Turk (sort_stacks)
-sort_if_needed(&ps);
+    - Ordenar 500 números en ~2900 movimientos
 
-// Liberar toda la memoria asignada:
-//  - stack A
-//  - stack B
-//  - args (si vienen de ft_split)
-free_all(&ps);
+- Muy por encima de los requisitos del proyecto.
 
-// Salida limpia
-return (0);
+---
 
+## 📚 Índice
+
+1. [Objetivo del proyecto](#objetivo-del-proyecto)
+2. [Arquitectura general](#arquitectura-general)
+3. [1. Pre‑partición por mediana](#1-prepartición-por-mediana)
+4. [2. Ordenación de 3 elementos](#2-ordenación-de-3-elementos)
+5. [3. Asignación de posiciones y objetivos](#3-asignación-de-posiciones-y-objetivos)
+6. [4. Cálculo de costes](#4-cálculo-de-costes)
+7. [5. Selección del nodo más barato](#5-selección-del-nodo-más-barato)
+8. [6. Ejecución optimizada de movimientos](#6-ejecución-optimizada-de-movimientos)
+9. [7. Inserción completa desde B](#7-inserción-completa-desde-b)
+10. [8. Rotación final](#8-rotación-final)
+11. [Rendimiento](#rendimiento)
+12. [Decisiones de diseño](#decisiones-de-diseño)
+
+---
+
+<h2 id="objetivo-del-proyecto">🎯 Objetivo del proyecto</h2>
+
+Ordenar una lista de números utilizando dos pilas (**A** y **B**) y un conjunto limitado de operaciones:
+
+	 **sa, sb, ss**: Intercambio (swap).
+	 **pa, pb**: Empujar (push).
+	 **ra, rb, rr**: Rotar (rotate).
+	 **rra, rrb, rrr**: Rotación inversa (reverse rotate).
+
+- El reto consiste en minimizar el número total de movimientos.
+
+---
+
+<h2 id="arquitectura-general">🏗 Arquitectura general</h2>
+
+Mi implementación sigue esta estructura:
+
+    Pre‑partición por mediana → empujar solo los números pequeños a B
+
+    Ordenar 3 elementos en A
+
+    Para cada nodo en B:
+
+        actualizar posiciones
+
+        asignar objetivo
+
+        calcular costes
+
+        elegir el nodo más barato
+
+        ejecutar movimientos combinados
+
+    Reinsertar todos los nodos en A
+
+    Rotar A hasta dejar el mínimo arriba
+
+- Este flujo permite un rendimiento muy alto sin necesidad de chunks complejos.
+
+---
+
+<h2 id="1-prepartición-por-mediana">🔹 1. Pre‑partición por mediana</h2>
+
+En lugar de empujar todos los elementos a B, calculo la mediana de A y empujo solo los elementos menores que ella.
+
+Ventajas:
+
+    A queda más ordenado
+
+    B contiene valores pequeños (más fáciles de insertar)
+
+    Se reduce el caos inicial
+
+    Se reduce el número total de inserciones caras
+
+- Esto deja A con ~50 elementos y B con ~50 (en el caso de 100 números).
+
+--- 
+
+<h2 id="2-ordenación-de-3-elementos">🔹 2. Ordenación de 3 elementos</h2>
+
+    Cuando A tiene solo 3 elementos, uso sort_three() para ordenarlos con un número mínimo de operaciones.
+
+- Esto deja A en un estado estable para recibir elementos desde B.
+
+---
+
+<h2 id="3-asignación-de-posiciones-y-objetivos">🔹 3. Asignación de posiciones y objetivos</h2>
+
+Antes de cada inserción:
+
+    Actualizo pos de cada nodo
+
+    Para cada nodo de B, busco su target_node en A:
+
+        el primer número mayor que él
+
+        si no existe, el número más pequeño de A
+
+- Esto determina dónde debe insertarse cada nodo.
 
 
 # 🔥 3. ¿Cómo funciona entonces el flujo completo?
@@ -371,15 +441,16 @@ push_swap/
     │   ├── rra.c
     │   ├── rrb.c
     │   ├── rrr.c
+	|   ├── stack_ops_utils.c
     │
     ├──algorithm/
-	│
-	├── sort_if_needed.c
-	├── sort_three.c
-	├── sort_stacks.c
-	│
-	├── positions.c          // calcula pos y above_median
-	├── target_positions.c   // asigna target_node target_pos
-	├── costs.c              // calcula cost_a y cost_b
-	├── cheapest.c           // encuentra el nodo más barato
-	├── execute_moves.c      // ejecuta los movimientos  óptimos
+	|	├── cheapest.c
+	|	├── sort_if_needed.c
+	|	├── sort_three.c
+	|	├── sort_stacks.c
+	|	├── median.c
+	|	├── positions.c
+	|	├── target_positions.c
+	|	├── costs.c
+	|	├── find_smallest.c
+	|	├── execute_moves.c
