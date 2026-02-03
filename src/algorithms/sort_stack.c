@@ -6,7 +6,7 @@
 /*   By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:54:41 by jonadomi          #+#    #+#             */
-/*   Updated: 2026/02/02 19:18:42 by jonadomi         ###   ########.fr       */
+/*   Updated: 2026/02/03 19:56:44 by jonadomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,25 @@
 
 static void	push_all_but_three(t_ps *ps)
 {
+	int	median;
+	int	size;
+	int	pushed;
+
+	size = ps->size_a;
+	median = get_median(ps->a, size);
+	pushed = 0;
 	while (ps->size_a > 3)
-		pb(ps);
+	{
+		if (ps->a->nbr < median)
+		{
+			pb(ps);
+			pushed++;
+		}
+		else
+			ra(ps);
+		if (pushed >= size / 2)
+			break ;
+	}
 }
 
 static void	rotate_until_sorted(t_ps *ps)

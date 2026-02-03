@@ -6,7 +6,7 @@
 /*   By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/08 14:50:11 by jonadomi          #+#    #+#             */
-/*   Updated: 2026/02/02 21:01:28 by jonadomi         ###   ########.fr       */
+/*   Updated: 2026/02/03 19:55:12 by jonadomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,5 +81,7 @@ void	calculate_costs(t_ps *ps);
 void	execute_cheapest(t_ps *ps);
 t_node	*find_smallest(t_node *stack);
 t_node	*get_cheapest_node(t_ps *ps);
+int		get_median(t_node *a, int size);
+void	bubble_sort(int *arr, int size);
 
 #endif
