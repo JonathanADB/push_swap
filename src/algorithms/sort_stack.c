@@ -6,7 +6,7 @@
 /*   By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 15:54:41 by jonadomi          #+#    #+#             */
-/*   Updated: 2026/02/03 19:56:44 by jonadomi         ###   ########.fr       */
+/*   Updated: 2026/02/09 19:00:58 by jonadomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	push_all_but_three(t_ps *ps)
 	size = ps->size_a;
 	median = get_median(ps->a, size);
 	pushed = 0;
-	while (ps->size_a > 3)
+	while (ps->size_a > 3 && pushed < size / 2)
 	{
 		if (ps->a->nbr < median)
 		{
@@ -30,28 +30,28 @@ static void	push_all_but_three(t_ps *ps)
 		}
 		else
 			ra(ps);
-		if (pushed >= size / 2)
-			break ;
+	}
+	while (ps->size_a > 3)
+	{
+		if (ps->a->nbr >= median && ps->a->next && ps->a->next->nbr < median)
+			rra(ps);
+		else
+			pb(ps);
 	}
 }
 
 static void	rotate_until_sorted(t_ps *ps)
 {
 	t_node	*smallest;
-	int		pos;
 
+	update_positions(ps);
 	smallest = find_smallest(ps->a);
-	pos = smallest->pos;
-	if (pos <= ps->size_a / 2)
-	{
+	if (smallest->pos <= ps->size_a / 2)
 		while (ps->a != smallest)
 			ra(ps);
-	}
 	else
-	{
 		while (ps->a != smallest)
 			rra(ps);
-	}
 }
 
 void	sort_stacks(t_ps *ps)

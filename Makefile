@@ -6,7 +6,7 @@
 #    By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/01/08 14:41:46 by jonadomi          #+#    #+#              #
-#    Updated: 2026/02/02 21:13:33 by jonadomi         ###   ########.fr        #
+#    Updated: 2026/02/09 19:35:11 by jonadomi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,13 +21,10 @@ INC_DIR     = include
 LIBFT_DIR	= libft
 LIBFT		= $(LIBFT_DIR)/libft.a
 
-# Encuentra todos los .c dentro de src y subcarpetas
 SRCS        = $(shell find $(SRC_DIR) -name "*.c")
 
-# Convierte src/xxx.c → obj/xxx.o
 OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-# Header principal
 HEADER      = $(INC_DIR)/push_swap.h
 
 all: $(NAME)
@@ -38,7 +35,6 @@ $(NAME): $(LIBFT) $(OBJS)
 $(LIBFT): 
 	$(MAKE) -C $(LIBFT_DIR)
 
-# Compila .o y crea subcarpetas automáticamente
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(HEADER)
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@

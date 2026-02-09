@@ -6,7 +6,7 @@
 /*   By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/02 18:04:32 by jonadomi          #+#    #+#             */
-/*   Updated: 2026/02/02 20:59:23 by jonadomi         ###   ########.fr       */
+/*   Updated: 2026/02/09 16:14:59 by jonadomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	rb(t_ps *ps)
 
 	if (!ps || ps->size_b < 2)
 		return ;
-	first = pop_top(&ps->b);
+	first = ps->b;
+	ps->b = ps->b->next;
+	first->next = NULL;
 	last = ps->b;
 	while (last->next)
 		last = last->next;

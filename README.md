@@ -71,8 +71,8 @@ Mis resultados superan con creces los límites de la evaluación (100%):
 
 | Cantidad | Límite 42 (100%) | Mi Resultado | Calificación |
 | :--- | :--- | :--- | :--- |
-| **100 números** | < 700 movimientos | **~550 – 650** | 🏆 Excelente |
-| **500 números** | < 5500 movimientos | **~2900** | 🏆 Excelente |
+| **100 números** | < 700 movimientos | **~602** | 🏆 Excelente |
+| **500 números** | < 5500 movimientos | **~4837** | 🏆 Excelente |
 
 ---
 
@@ -122,7 +122,7 @@ Mi implementación sigue una estructura de **Pipeline de Optimización**, dividi
 | **III. Finalización** | `Inserción` | Se reinsertan los nodos de B en A en su posición exacta. |
 | | `Ajuste` | Rotación final del Stack A para situar el valor mínimo en el tope. |
 
-> **💡 Ventaja competitiva:** Este flujo permite alcanzar un rendimiento de **~2900 movimientos en 500 números** sin la sobrecarga de gestionar *chunks* o bloques fijos, adaptándose dinámicamente a la distribución de los datos.
+> **💡 Ventaja competitiva:** Este flujo permite alcanzar un rendimiento de **~4837 movimientos en 500 números** sin la sobrecarga de gestionar *chunks* o bloques fijos, adaptándose dinámicamente a la distribución de los datos.
 
 ---
 
@@ -254,7 +254,7 @@ Este proceso se repite cíclicamente hasta que el **Stack B queda completamente 
 
 
 
-> **Dato de rendimiento:** Gracias a que el algoritmo es dinámico y recalcula posiciones en cada paso, logra adaptarse a cualquier distribución de números, manteniendo la media por debajo de los **~2900 movimientos**.
+> **Dato de rendimiento:** Gracias a que el algoritmo es dinámico y recalcula posiciones en cada paso, logra adaptarse a cualquier distribución de números, manteniendo la media por debajo de los **~4837 movimientos**.
 
 ---
 
@@ -280,9 +280,9 @@ Gracias a la optimización del cálculo de costes y la pre-partición, los resul
 
 | Tamaño de la Pila | Límite para 5 Puntos | Mi Resultado | Eficiencia |
 | :--- | :--- | :--- | :---: |
-| **5 números** | < 12 movimientos | **7 – 9** | ⚡ 100% |
-| **100 números** | < 700 movimientos | **~550 – 650** | ⚡ 100% |
-| **500 números** | < 5500 movimientos | **~2900** | ⚡ 100% |
+| **5 números** | < 12 movimientos | **~7** | ⚡ 100% |
+| **100 números** | < 700 movimientos | **~602** | ⚡ 100% |
+| **500 números** | < 5500 movimientos | **~4837** | ⚡ 100% |
 
 ---
 
@@ -290,7 +290,7 @@ Gracias a la optimización del cálculo de costes y la pre-partición, los resul
 
 La arquitectura del proyecto fue diseñada bajo tres pilares: **Eficiencia**, **Simplicidad** y **Robustez**.
 
-* **Mediana vs. Chunks:** Optar por la pre-partición por mediana en lugar de bloques fijos (chunks) simplifica la lógica del código y evita que el Stack B se convierta en un sumidero de movimientos innecesarios.
+* **Mediana:** Optar por la pre-partición por mediana simplifica la lógica del código y evita que el Stack B se convierta en un sumidero de movimientos innecesarios.
 * **Mantenimiento de Orden en A:** Al dejar siempre el Stack A parcialmente ordenado (mínimo 3 elementos), reducimos drásticamente la "resistencia" al reinsertar nodos desde B.
 * **Estructura de Datos `t_node`:** Cada nodo de la lista circular lleva consigo su propia "inteligencia" (posición, coste, objetivo), lo que permite que el algoritmo Turk tome decisiones en tiempo real sin recorrer toda la lista repetidamente.
 * **Modularidad:** El código está fracturado en módulos lógicos (costes, movimientos, inicialización), facilitando la depuración con **Valgrind** y cumpliendo con la normativa de la Norma de 42.

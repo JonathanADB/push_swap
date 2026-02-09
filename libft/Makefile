@@ -6,7 +6,7 @@
 #    By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/10/21 16:27:51 by jonadomi          #+#    #+#              #
-#    Updated: 2026/02/02 20:43:50 by jonadomi         ###   ########.fr        #
+#    Updated: 2026/02/09 19:35:49 by jonadomi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,10 +18,8 @@ RM          = rm -f
 SRC_DIR     = src
 OBJ_DIR     = obj
 
-# Encuentra todos los .c dentro de src y subcarpetas
 SRCS        = $(shell find $(SRC_DIR) -name "*.c")
 
-# Convierte src/xxx.c → obj/xxx.o
 OBJS        = $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
 all: $(NAME)
@@ -30,7 +28,6 @@ $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
 	@echo "libft compilada ✔"
 
-# Compilación automática con creación de carpetas
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@

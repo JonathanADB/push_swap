@@ -6,7 +6,7 @@
 /*   By: jonadomi <jonadomi@student.42urduliz.com>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/30 22:58:38 by jonadomi          #+#    #+#             */
-/*   Updated: 2026/02/02 20:56:52 by jonadomi         ###   ########.fr       */
+/*   Updated: 2026/02/09 18:57:46 by jonadomi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,6 @@ void	error_exit(t_ps *ps)
 		free_stack(&ps->b);
 	if (ps->args)
 		free_split(ps->args);
-	ft_printf("Error\n");
+	write(2, "Error\n", 6);
 	exit(1);
 }
